@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Avito</title>
+</head>
+<body>
+<h1>Hello, Avito!</h1>
+<hr>
+<h4>Подробная информация о товаре</h4>
+<b>Название товара:</b> <span th:text="${product.title}"></span><br>
+<b>Описание товара:</b> <span th:text="${product.description}"></span><br>
+<b>Цена:</b> <span th:text="${product.price}"></span><br>
+<b>Город:</b> <span th:text="${product.city}"></span><br>
+<b>Автор:</b> <span th:text="${product.author}"></span><br>
+<hr>
+<h3>Создать новый товар</h3>
+<form th:action="@{/product/delete/{id}(id=${product.id})}" method="post">
+    <input type="submit" value="Удалить товар"/>
+</form>
+
+</body>
+</html>

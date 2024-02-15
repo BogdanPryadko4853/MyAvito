@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Avito</title>
+</head>
+<body>
+<h1>Hello, Avito!</h1>
+<hr>
+<h4>Товары со всей России</h4>
+<table>
+    <thead>
+    <tr>
+        <th>Название</th>
+        <th>Цена</th>
+        <th>Действия</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="product : ${products}">
+        <td th:text="${product.title}"></td>
+        <td th:text="${product.price}"></td>
+        <td>
+            <a th:href="@{/product/{id}(id=${product.id})}">Подробнее</a>
+            <form th:action="@{/product/delete/{id}(id=${product.id})}" method="post" style="display: inline;">
+                <button type="submit">Удалить</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<hr>
+<h3>Создать новый товар</h3>
+<form th:action="@{/product/create}" method="post">
+    <label for="title">Название объявления:</label>
+    <input type="text" id="title" name="title"/><br><br>
+    <label for="description">Описание объявления:</label>
+    <input type="text" id="description" name="description"/><br><br>
+    <label for="price">Цена:</label>
+    <input type="text" id="price" name="price"/><br><br>
+    <label for="city">Город:</label>
+    <input type="text" id="city" name="city"/><br><br>
+    <label for="author">Имя:</label>
+    <input type="text" id="author" name="author"/><br><br>
+    <input type="submit" value="Добавить товар"/>
+</form>
+</body>
+</html>
