@@ -43,5 +43,35 @@
     <input type="text" id="author" name="author"/><br><br>
     <input type="submit" value="Добавить товар"/>
 </form>
+
+<hr>
+<h3>Поиск товаров по городу</h3>
+<form th:action="@{/product/search}" method="post">
+    <label for="searchCity">Город:</label>
+    <input type="text" id="searchCity" name="city"/><br><br>
+    <input type="submit" value="Поиск"/>
+</form>
+<h4>Результаты поиска</h4>
+<table>
+    <thead>
+    <tr>
+        <th>Название</th>
+        <th>Цена</th>
+        <th>Действия</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="product : ${products}">
+        <td th:text="${product.title}"></td>
+        <td th:text="${product.price}"></td>
+        <td>
+            <a th:href="@{/product/{id}(id=${product.id})}">Подробнее</a>
+            <form th:action="@{/product/delete/{id}(id=${product.id})}" method="post" style="display: inline;">
+                <button type="submit">Удалить</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>
