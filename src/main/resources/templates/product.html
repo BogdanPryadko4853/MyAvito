@@ -1,77 +1,38 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Avito</title>
 </head>
 <body>
-<h1>Hello, Avito!</h1>
+<h1>Avito</h1>
 <hr>
 <h4>Товары со всей России</h4>
-<table>
-    <thead>
-    <tr>
-        <th>Название</th>
-        <th>Цена</th>
-        <th>Действия</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="product : ${products}">
-        <td th:text="${product.title}"></td>
-        <td th:text="${product.price}"></td>
-        <td>
-            <a th:href="@{/product/{id}(id=${product.id})}">Подробнее</a>
-            <form th:action="@{/product/delete/{id}(id=${product.id})}" method="post" style="display: inline;">
-                <button type="submit">Удалить</button>
-            </form>
-        </td>
-    </tr>
-    </tbody>
-</table>
-<hr>
-<h3>Создать новый товар</h3>
-<form th:action="@{/product/create}" method="post">
-    <label for="title">Название объявления:</label>
-    <input type="text" id="title" name="title"/><br><br>
-    <label for="description">Описание объявления:</label>
-    <input type="text" id="description" name="description"/><br><br>
-    <label for="price">Цена:</label>
-    <input type="text" id="price" name="price"/><br><br>
-    <label for="city">Город:</label>
-    <input type="text" id="city" name="city"/><br><br>
-    <label for="author">Имя:</label>
-    <input type="text" id="author" name="author"/><br><br>
-    <input type="submit" value="Добавить товар"/>
-</form>
-
-<hr>
-<h3>Поиск товаров по городу</h3>
-<form th:action="@{/product/search}" method="post">
-    <label for="searchCity">Город:</label>
-    <input type="text" id="searchCity" name="city"/><br><br>
+<form action="/" method="get">
+    Поиск по названию объявления: <input type="text" name="title"><br>
     <input type="submit" value="Поиск"/>
 </form>
-<h4>Результаты поиска</h4>
-<table>
-    <thead>
-    <tr>
-        <th>Название</th>
-        <th>Цена</th>
-        <th>Действия</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="product : ${products}">
-        <td th:text="${product.title}"></td>
-        <td th:text="${product.price}"></td>
-        <td>
-            <a th:href="@{/product/{id}(id=${product.id})}">Подробнее</a>
-            <form th:action="@{/product/delete/{id}(id=${product.id})}" method="post" style="display: inline;">
-                <button type="submit">Удалить</button>
-            </form>
-        </td>
-    </tr>
-    </tbody>
-</table>
+<div th:if="${not #lists.isEmpty(products)}" th:else>
+    <div th:each="product : ${products}">
+        <div>
+            <p><b><span th:text="${product.title}"></span></b> <span th:text="${product.price}"></span> руб. | <a th:href="@{/product/{id}(id=${product.id})}">Подробнее...</a></p>
+        </div>
+    </div>
+</div>
+<div th:if="${#lists.isEmpty(products)}">
+    <h3>Товаров нет</h3>
+</div>
+<hr>
+<h3>Создать новый товар</h3>
+<form th:action="@{/product/create}" method="post" enctype="multipart/form-data">
+    Название объявления: <input type="text" name="title"/><br><br>
+    Описание объявления: <input type="text" name="description"/><br><br>
+    Цена: <input type="number" name="price"/><br><br>
+    Город: <input type="text" name="city"/><br><br>
+    Имя: <input type="text" name="author"/><br><br>
+    Первая фотография: <input type="file" name="file1"/><br><br>
+    Вторая фотография: <input type="file" name="file2"/><br><br>
+    Третья фотография: <input type="file" name="file3"/><br><br>
+    <input type="submit" value="Добавить товар"/>
+</form>
 </body>
 </html>
